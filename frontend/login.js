@@ -18,9 +18,6 @@ async function checkUser(e){
         alert('Done');
         window.location="login.html";
     }
-    else{
-        alert('Something went wrong... Please check');
-    }
 
     console.log('token',localStorage.getItem('token'));
 }
