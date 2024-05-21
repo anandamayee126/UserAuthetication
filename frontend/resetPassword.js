@@ -1,16 +1,18 @@
-import axios from 'axios';
+// import axios from 'axios';
 var resetId=null;
 window.addEventListener('load' , async()=>{
     let url = window.location.href      
+    console.log("urlllllllll",url);
     let arr = url.split("?reset=")
     resetId = arr[1]
     console.log(resetId)
     if(resetId == null || resetId.length == 0){
         alert("wrong link")
-        location.href ='forgot-password.html'
+        location.href ='forgetPassword.html'
     }
     const token= localStorage.getItem('token');
     const res = await axios.get(`http://localhost:4000/user/check-password-link/${resetId}`,{headers: {'Authorization': token}})
+    console.log("result",res);
     if(!res.data.isActive){
         alert("link expired get a new one")
         location.href ='forgetPassword.html'
@@ -28,5 +30,5 @@ async function updatePassword(e){
     const token= localStorage.getItem('token');
     const update= await axios.post(`http://localhost:4000/user/update-password/${resetId}`,{newPassword},{headers:{'Authorization':token}});
     alert("Password updated successfully");
-    location.href="../login.html";
+    location.href="login.html";
 }

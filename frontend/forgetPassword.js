@@ -10,4 +10,7 @@ async function sendMail(e){
     console.log("token",token);
     const send_email= await axios.post('http://localhost:4000/user/forgetPassword',{email},{headers: {'Authorization': token}});
     console.log(send_email);
+    if(send_email.data.success){
+        alert("Check your mail box !!");
+    }
 }

@@ -83,7 +83,7 @@ router.post('/forgetPassword',middleware,async(req,res)=>{
             "email":rec_email
         }]
         console.log("req.user._id",req.user._id);
-        const newFp = await FP.create({userId:req.user._id,isActive:false});
+        const newFp = await FP.create({userId:req.user._id,isActive:true});
         console.log("link",newFp);
         const response = await apiInstance.sendTransacEmail({
             sender,
@@ -111,11 +111,10 @@ router.post('/update-password/:resetId',middleware,async(req,res) => {
         if(!(resetUser.isActive)) {
             return res.json({success : false ,msg :"Link has expired... Please try again"});
         }
-        // const user= resetUser.getUser();
         const hash=await bcrypt.hash(newPassword,10);
 
         await User.findOneAndUpdate({_id:user_id},{$set: {password : hash}});
-        await FP.findOneAndUpdate({_id:id},{$set:{isActive : false}});
+        await FP.findOneAndUpdate({_id:id},{$set:{isActive : true}});
 
 
         return res.status(200).json({success:true,message:"Password updated successfully"});
@@ -133,7 +132,8 @@ router.get('/check-password-link/:resetId',async(req, res) => {
     try{
         const id=req.params.resetId;
         const find=await FP.find({_id:id});
-        return res.json({isActive:find.isActive});
+        console.log("check",find[0].isActive);
+        return res.json({isActive:find[0].isActive});
     }
     catch(err) {
         console.log(err);

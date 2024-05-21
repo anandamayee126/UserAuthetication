@@ -15,6 +15,11 @@ async function checkUser(e){
     console.log("login",login);
     if(login.data.success){
         localStorage.setItem('token',login.data.token);
+        alert('Done');
+        window.location="login.html";
+    }
+    else{
+        alert('Something went wrong... Please check');
     }
 
     console.log('token',localStorage.getItem('token'));
