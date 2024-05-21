@@ -59,9 +59,6 @@ router.post('/login',async(req,res)=>{
     }
 })
 
-
-
-
 router.post('/forgetPassword',middleware,async(req,res)=>{
     try{
         const rec_email = req.body.email;
